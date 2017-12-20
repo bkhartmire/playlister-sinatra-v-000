@@ -37,9 +37,11 @@ class SongsController < ApplicationController
 
   patch '/songs/:slug' do
     @song = Song.find_by_slug(params[:slug])
-    @song.update(name: params[:name], artist: params[:artist])
+    @song.name = params[:name] unless params[:name].empty?
+    @song.artist = params[:artist] unless params[:artist].empty?
+    @song.save
     flash[:message] = "Successfully edited song."
-    erb :show
+    redirect to "/songs/#{@song.slug}"
   end
 
 end
