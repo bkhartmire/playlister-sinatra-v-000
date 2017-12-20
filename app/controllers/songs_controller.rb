@@ -20,7 +20,7 @@ class SongsController < ApplicationController
     @song.genres << Genre.find(params[:genres][0])
     @song.save
     flash[:message] = "Successfully created song."
-    erb :show
+    redirect to "/songs/#{@song.slug}"
   end
 
   get '/songs/:slug' do
@@ -41,7 +41,7 @@ class SongsController < ApplicationController
     @song.artist = Artist.find_or_create_by(name: params[:artist])
     @song.save
     flash[:message] = "Successfully edited song."
-    redirect to "/songs/#{@song.slug}"
+    erb :show
   end
 
 end
